@@ -3,38 +3,58 @@ package boardgame;
 public class Board {
 	
 	private int rows;
-	private int colunmn;
+	private int columns;
 	private Piece[][] pieces;
-	public Board(int rows, int colunmn) {
+	public Board(int rows, int columns) {
 		this.rows = rows;
-		this.colunmn = colunmn;
-		pieces = new Piece[rows][colunmn];
+		this.columns = columns;
+		pieces = new Piece[rows][columns];
 	}
 	public int getRows() {
 		return rows;
 	}
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
+
 	public int getColunmn() {
-		return colunmn;
-	}
-	public void setColunmn(int colunmn) {
-		this.colunmn = colunmn;
+		return columns;
 	}
 
 	public Piece piece(int row, int column) {
+		if(!positionExists(row, column)) {
+			throw new BoardException("Position not on the bord");
+		}
 		return pieces [row][column];
 		}
 	public Piece piece(Position position) {
+		if(!positionExists(position)) {
+			throw new BoardException("Position not on the bord");
+		}
 		return pieces[position.getRow()][position.getColum()];
 		
 	}
 	public void placePiece(Piece piece,Position position) {
+		if(thereIsPiece(position)) {
+			throw new BoardException("there is already a piece on position"+ position);
+			
+		}
 		pieces[position.getRow()][position.getColum()] = piece;
 		piece.position = position;
 	}
 	
+	public boolean positionExists(int row, int column) {
+		return row >= 0 && row < rows && column >= 0 && column < columns;
+		
+	}
+	public boolean positionExists(Position position) {
+		return positionExists(position.getRow(),position.getColum());
+	
+	}
+	
+	public boolean thereIsPiece(Position position) {
+		if(!positionExists(position)) {
+			throw new BoardException("Position not on the bord");
+		}
+		return piece(position)!= null;
+	}
 	
 
 }
