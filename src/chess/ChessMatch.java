@@ -1,7 +1,6 @@
 package chess;
 
 import boardgame.Board;
-import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
@@ -13,20 +12,33 @@ public class ChessMatch {
 		initialSetup();
 	}
 
-	public ChessPiece[][] getpieces(){
+	public ChessPiece[][] getpieces() {
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColunmn()];
-		for(int i = 0;i<board.getRows();i++) {
-			for (int j=0;j<board.getColunmn();j++) {
-				mat[i][j] = (ChessPiece) board.piece(i,j);
-				//(ChessPiece) downcasting como peça de xadrex
-			}	
+		for (int i = 0; i < board.getRows(); i++) {
+			for (int j = 0; j < board.getColunmn(); j++) {
+				mat[i][j] = (ChessPiece) board.piece(i, j);
+				// (ChessPiece) casting como peça de xadrex
+			}
 		}
 		return mat;
 	}
+
+	private void placeNewPiece(char column, int row, ChessPiece piece) {
+		board.placePiece(piece, new ChessPosition(column, row).ToPosition());
+		// aqui ele está pegando a peça em posição em coordenadas xadrez e
+		// passando para matriz
+
+		/*
+		 * aqui é um metodo pra voce conseguir ditar a posição da peça do xadrez de
+		 * acordo com a numeração do do xadrez não com a da matriz
+		 */
+
+	}
+
 	private void initialSetup() {
-		board.placePiece(new Rook(board,Color.WHITE), new Position(2, 1));
-		board.placePiece(new King(board,Color.BLACK), new Position (0,4));
-		board.placePiece(new King(board,Color.BLACK), new Position (7,4));
-		}
+		placeNewPiece('b', 6, new Rook(board, Color.WHITE));
+		placeNewPiece('e', 8,new King(board, Color.BLACK));
+		placeNewPiece('e',1,new King(board, Color.BLACK));
+	}
 
 }
