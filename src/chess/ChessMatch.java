@@ -1,6 +1,8 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
+import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
@@ -17,20 +19,43 @@ public class ChessMatch {
 		for (int i = 0; i < board.getRows(); i++) {
 			for (int j = 0; j < board.getColunmn(); j++) {
 				mat[i][j] = (ChessPiece) board.piece(i, j);
-				// (ChessPiece) casting como peça de xadrex
+				// (ChessPiece) casting como peï¿½a de xadrex
 			}
 		}
 		return mat;
 	}
+	
+	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
+		Position source = sourcePosition.ToPosition();
+		Position target = targetPosition.ToPosition();
+		validateSourcePosition(source);
+		Piece capturedPiece =  makeMove(source,target);
+		return (ChessPiece) capturedPiece;
+		
+	}
+	private Piece makeMove(Position source, Position target) {
+		Piece p = board.removePiece(source);
+		Piece capturedPiece = board.removePiece(target);
+		board.placePiece(p, target);
+		return capturedPiece;
+		
+	}
+	private void validateSourcePosition(Position position) {
+		if (!board.thereIsPiece(position)) {
+			throw new ChessException("there is no piece on source position");
+			
+		}
+		
+	}
 
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).ToPosition());
-		// aqui ele está pegando a peça em posição em coordenadas xadrez e
+		// aqui ele estï¿½ pegando a peï¿½a em posiï¿½ï¿½o em coordenadas xadrez e
 		// passando para matriz
 
 		/*
-		 * aqui é um metodo pra voce conseguir ditar a posição da peça do xadrez de
-		 * acordo com a numeração do do xadrez não com a da matriz
+		 * aqui ï¿½ um metodo pra voce conseguir ditar a posiï¿½ï¿½o da peï¿½a do xadrez de
+		 * acordo com a numeraï¿½ï¿½o do do xadrez nï¿½o com a da matriz
 		 */
 
 	}
