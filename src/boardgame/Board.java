@@ -14,7 +14,7 @@ public class Board {
 		return rows;
 	}
 
-	public int getColunmn() {
+	public int getColumns() {
 		return columns;
 	}
 
